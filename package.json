@@ -1,0 +1,15 @@
+{
+  "name": "dropngo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "input-event": "git://github.com/risacher/input-event.git",
+    "onoff": "^1.1.1"
+  }
+}
