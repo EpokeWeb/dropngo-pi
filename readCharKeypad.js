@@ -1,29 +1,22 @@
 var inputevent = require('input-event');
 var event0 = new inputevent('by-id/usb-05d5_KEYBOARD-event-kbd')
-var line = '';
 
-
-function ReadlineKeypad(callback) {
-  line = '';
+function ReadCharKeypad(callback) {
 
   event0.on("keyup", (raw) => {
-    console.log('ReadlineKeypad', 'keyup');
+    console.log('ReadCharKeypad', 'keyup');
     var character = translateKey(raw.keyId);
 
     if (!character) {
       console.log('ReadlineKeypad', 'error unknown character', raw);
-      return callback('');
+      return callback('-1');
     }
 
-    line += character;
-
-    // Length ok
-    if(line.length == 5) {
-      event0.removeAllListeners();
-      callback(line);
-    }
+    event0.removeAllListeners();
+    callback(character);
   });
 }
+
 
 function translateKey (keyId) {
   switch (keyId) {
@@ -58,6 +51,6 @@ function translateKey (keyId) {
   }
 }
 
-exports = module.exports = ReadlineKeypad;
+exports = module.exports = ReadCharKeypad;
 
 

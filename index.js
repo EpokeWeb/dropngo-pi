@@ -2,21 +2,14 @@ var Dropngo = require('./dropngo');
 var Lock = require('./lock');
 var config = require('./config')
 var ReadlineKeypad = require('./readlineKeypad');
+var ReadCharKeypad = require('./readCharKeypad');
+var validateNIP = require('./validateNip');
+var toggleLockOnKey = require('./toggleLockOnKey');
 var dropngo = new Dropngo();
 
 
-function validateNIP(nip, callback) {
-  console.log('waiting for nip...');
-
-  ReadlineKeypad((line) => {
-    if (line == nip) {
-      callback();
-    }
-  });
-}
-
-
 Lock.lock();
+toggleLockOnKey('-');
 
 
 dropngo.on('connection', function(data) {
@@ -30,7 +23,7 @@ dropngo.on('fulfillment', function(data) {
   validateNIP(nip, () => {
       Lock.unlock();
 
-      ReadlineKeypad((line) => {
+      ReadCharKeypad(() => {
         Lock.lock();
 
         var nip = dropngo.fulfilled({ notify: !!data.notify });
@@ -38,7 +31,7 @@ dropngo.on('fulfillment', function(data) {
         validateNIP(nip, () => {
           Lock.unlock();
 
-          ReadlineKeypad((line) => {
+          ReadCharKeypad(() => {
               Lock.lock();
           });
         });

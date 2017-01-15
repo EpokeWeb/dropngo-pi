@@ -17,10 +17,19 @@ function unlock() {
   green.writeSync(0);
 }
 
-process.on('SIGINT', function(){
-  console.log('Lock#SIGINT');
-  out.unexport();
-});
+
+function toggle() {
+  console.log('Lock#toggle');
+  var state = out.readSync();
+  console.log('Lock#toggle','current state', state);
+  state ? unlock() : lock();
+}
+
+//process.on('SIGINT', function(){
+//  console.log('Lock#SIGINT');
+//  out.unexport();
+//});
 
 exports.lock = lock;
 exports.unlock = unlock;
+exports.toggle = toggle;
