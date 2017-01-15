@@ -26,7 +26,7 @@ dropngo.on('fulfillment', function(data) {
       ReadCharKeypad(() => {
         Lock.lock();
 
-        var nip = dropngo.fulfilled({ notify: !!data.notify });
+        var nip = dropngo.fulfilled({ notify: data.notify });
 
         validateNIP(nip, () => {
           Lock.unlock();
